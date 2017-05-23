@@ -4,9 +4,9 @@
  /// @date    2017-05-21 16:16:35
  ///
 
-#define _LOG4CPP_
+//#define _LOG4CPP_     //主函数需要加这句
 
-#include "Mylog.h"
+#include "MyLog.h"
 //#include "func.h"
 #include "Configuration.h"
 #include "DictProducer.h"
@@ -16,6 +16,9 @@
 using std::map;
 using std::cout;
 using std::endl;
+
+
+#if 0
 
 int main(void){
 #if 0
@@ -38,3 +41,4 @@ int main(void){
 	
 	return 0;
 }
+#endif

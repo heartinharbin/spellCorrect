@@ -6,7 +6,7 @@
 
 
 #include "Configuration.h"
-#include "Mylog.h"
+#include "MyLog.h"
 
 #include <iostream>
 #include <fstream>
@@ -35,7 +35,7 @@ Configuration * Configuration::_pInstance = getInstance();
 void Configuration::init(){
 	ifstream ifs(_filepath.c_str());
 	if(!ifs.good()){
-		logError("open file error!");
+		LogError("open file error!");
 	}	
 	string tmpline;
 	stringstream ss;
@@ -44,7 +44,7 @@ void Configuration::init(){
 		ss << tmpline;
 		ss >> key >> value;
 		_configMap[key] = value;
-		logDebug(key + " " + value);
+		LogDebug((key + " " + value).c_str());
 		ss.clear();
 	}
 	ifs.close();

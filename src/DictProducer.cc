@@ -5,7 +5,7 @@
  ///
 
 #include "DictProducer.h"
-#include "Mylog.h"
+#include "MyLog.h"
 #include <sys/types.h>
 #include <dirent.h>
 //#include <boost/regex.hpp>
