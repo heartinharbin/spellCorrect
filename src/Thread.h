@@ -13,7 +13,7 @@
 
 namespace wd{
 
-namespace currend_thread{
+namespace current_thread{
 	extern __thread int a;
 }
 

@@ -30,7 +30,7 @@ Threadpool::~Threadpool(){
 
 void Threadpool::start(){
 	for(size_t idx = 0; idx != _threadNum; ++idx){
-		shared_ptr<Thread> sp(new Thread(std::bind(&Threadpool::threadFunc, this)));
+		shared_ptr<Thread> sp(new Thread(std::bind(&Threadpool::threadFunc, this, idx)));
 		_threads.push_back(sp);
 		sp->start();
 	}
@@ -61,7 +61,8 @@ Task Threadpool::getTask(){
 	return _buffer.pop();
 }
 
-void Threadpool::threadFunc(){
+void Threadpool::threadFunc(int num){
+	wd::current_thread::a = num;
 	while(!_isExit){
 		Task task = getTask();
 		if(task)

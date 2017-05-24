@@ -144,7 +144,8 @@ void DictProducer::create_index(){
 	ofs.close();
 }
 
-std::priority_queue<MyResult> & DictProducer::getMyresultQueue(string searchword){
+//std::priority_queue<MyResult> & DictProducer::getMyresultQueue(string searchword){
+std::string DictProducer::getMyresultQueue(string searchword){
 	set<string> alpha_set;
 	for(auto c : searchword){
 		alpha_set.insert(string(1, c));
@@ -164,12 +165,15 @@ std::priority_queue<MyResult> & DictProducer::getMyresultQueue(string searchword
 		_resultQueue.push({p.first, p.second, distance});
 	}
 	cout << "begin  my world" << endl;
-	cout << _resultQueue.top() << endl;
-	while(!_resultQueue.empty()){
+//	cout << _resultQueue.top() << endl;
+	int cnt = 10;
+	string res;
+	while(!_resultQueue.empty() && cnt--){
 		cout << _resultQueue.top() << endl;
+		res += (_resultQueue.top().candicate_word + " ");
 		_resultQueue.pop();
 	}
-	return _resultQueue;
+	return res;
 }
 
 }//end of namespace wd

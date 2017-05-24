@@ -50,8 +50,8 @@ public:
 		return _dictIndex;
 	}
 
-	std::priority_queue<MyResult> & getMyresultQueue(string searchword);
-
+	//std::priority_queue<MyResult> & getMyresultQueue(string searchword);
+	std::string getMyresultQueue(string searchword);
 		
 private:
 	DictProducer(string dir);

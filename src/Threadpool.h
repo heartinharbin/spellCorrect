@@ -38,7 +38,7 @@ public:
 
 private:
 	Task getTask();
-	void threadFunc();
+	void threadFunc(int num);
 private:
 	size_t _buffsize;
 	size_t _threadNum;
