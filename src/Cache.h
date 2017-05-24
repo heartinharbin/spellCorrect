@@ -20,13 +20,13 @@ namespace wd{
 
 class Cache{
 public:
-	Cache(int num);
+	Cache();
 	Cache(const Cache & cache);
 	void addElement(const string &key, const string &value);
 	void readFromFile(const string &filename);
 	void writeToFile(const string &filename);
 	void update(const Cache & rhs);
-
+	string query(const string &searchword);
 private:
 	unordered_map<string, string> _hashMap;
 	MutexLock _mutex;

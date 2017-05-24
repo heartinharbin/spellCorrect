@@ -28,6 +28,7 @@ void SpellCorrectServer::onConnection(const TcpConnectionPtr & conn){
 }
 
 void SpellCorrectServer::onMessage(const TcpConnectionPtr & conn){
+	cout << "SpellCorrectServer::onMessage()" << endl;
 	std::string s(conn->receive());	
 	MyTask task(s, conn);
 	_threadpool.addTask(std::bind(&MyTask::execute, &task));

@@ -8,9 +8,11 @@
 #ifndef __WD_TASK_H__
 #define __WD_TASK_H__
 
+#include "Thread.h"
 #include "MyResult.h"
 #include "Mydict.h"
 #include "TcpConnection.h"
+#include "CacheManger.h"
 #include <ctype.h>
 #include <string>
 #include <set>
@@ -31,8 +33,10 @@ namespace wd{
 class MyTask{
 public:
 	MyTask(string query, TcpConnectionPtr conn)
-		: _conn(conn)
-		  , _query(query){}
+		: _conn(conn){
+			query.pop_back();
+			_query = query;
+		}
 
 	MyTask(){}
 
@@ -40,7 +44,19 @@ public:
 		cout << "MyTask::execute()"<< endl;
 		cout << "_query:" << _query << endl;
 		Mydict::getInstance();
-		string msg = getMyresultQueue(_query);
+		cout << "wd::current_thread::a " << wd::current_thread::a << endl;
+		Cache &cache = CacheManger::getInstance()->getCache(wd::current_thread::a);
+		string msg = cache.query(_query);
+		//
+		cout << "1" << endl;
+		if(msg != string()){
+			cout << "cache find" << endl;
+		}else{
+			cout << "cache not find" << endl;
+			msg = getMyresultQueue(_query);
+		//	cout << "wd::current_thread::a" << wd::current_thread::a << endl;
+			cache.addElement(_query, msg);
+		}
 		cout << "res: " << msg << endl;
 		//执行具体的查询，得到结果msg之后，交给IO线程发送
 		_conn->sendInLoop(msg);
@@ -59,9 +75,9 @@ public:
 				alpha_set.insert(string(1, c));
 			}
 		}
-		cout << "1" << endl;
+	//	cout << "1" << endl;
 		map<string, int> tmpCandicateMap;
-		cout << "2" << endl;
+	//	cout << "2" << endl;
 		set<string>::iterator it;
 #if 0	//显示各个变量中的数据	
 		for(auto m : _readDict){
@@ -88,7 +104,7 @@ public:
 				tmpCandicateMap[_readDict[no].first] = _readDict[no].second;
 			}		
 		}
-		cout << "3" << endl;
+	//	cout << "3" << endl;
 		for(auto p : tmpCandicateMap){
 			int distance = ::distance(p.first, searchword);
 			_resultQueue.push({p.first, p.second, distance});
@@ -98,8 +114,8 @@ public:
 		string res;
 		int cnt = 10;
 		while(!_resultQueue.empty() && cnt--){
-			cout << _resultQueue.top() << endl;
-			res += (_resultQueue.top().candicate_word + " ");
+	//		cout << _resultQueue.top() << endl;
+			res += (_resultQueue.top().candicate_word + ":");
 			_resultQueue.pop();
 		}
 		return res;

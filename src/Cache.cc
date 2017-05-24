@@ -3,7 +3,7 @@
  /// @author  heartinharbin
  /// @date    2017-05-23 21:46:16
  ///
-
+//#include "Thread.h"
 #include "Cache.h"
 #include <fstream>
 #include <sstream>
@@ -17,14 +17,19 @@ using std::ofstream;
 using std::istringstream;
 namespace wd{
 
-Cache::Cache(int num){}
+
+
+Cache::Cache(){}
 
 Cache::Cache(const Cache & cache){
 	_hashMap = cache._hashMap;
 }
 
 void Cache::addElement(const string &key, const string &value){
+	cout << "Cache::addElement()" << endl;
+	cout << "size:" << _hashMap.size() << endl; 
 	_hashMap[key] = value;
+	cout << "size:" << _hashMap.size() << endl;
 }
 
 void Cache::readFromFile(const string &filename){
@@ -49,15 +54,33 @@ void Cache::writeToFile(const string &filename){
 		return;
 	}
 	for(auto i : _hashMap){
-		ofs << i.first << " " << i.second ;
+		ofs << i.first << " " << i.second << endl;
 	}
 	ofs.close();
 }
 
 void Cache::update(const Cache & rhs){
+//	cout << "update:" << wd::current_thread::a << endl;
 	MutexLockGuard guard(_mutex);
+	cout << "size:" << rhs._hashMap.size() << endl;
 	for(auto m : rhs._hashMap){
-		_hashMap[m.first] = m.second;	
+//		cout << m.first << " " << m.second << endl;
+		_hashMap.insert(m);	
+	}	
+}
+
+string Cache::query(const string & searchword){
+	cout << "Cache::query()" << endl;
+	cout << "size " << _hashMap.size() << endl;
+	cout << "query: " << searchword << endl;
+	for(auto m : _hashMap){
+		cout << m.first << " " << m.second << endl;
+	}
+	auto it = _hashMap.find(searchword);
+	if(it != _hashMap.end()){
+		return it->second;
+	}else{
+		return string();
 	}	
 }
 

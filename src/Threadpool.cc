@@ -62,7 +62,7 @@ Task Threadpool::getTask(){
 }
 
 void Threadpool::threadFunc(int num){
-	wd::current_thread::a = num;
+	wd::current_thread::a = num+1;
 	while(!_isExit){
 		Task task = getTask();
 		if(task)

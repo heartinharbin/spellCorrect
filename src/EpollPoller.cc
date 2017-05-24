@@ -8,6 +8,10 @@
 #include "SocketUtil.h"
 #include "Acceptor.h"
 #include <assert.h>
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 namespace wd{
 
@@ -148,10 +152,15 @@ void EpollPoller::handleMessage(int peerfd){
 	bool isClosed = isConnectionClosed(peerfd);
 	ConnectionMap::iterator it = _connMap.find(peerfd);
 	assert(it != _connMap.end());
+	
+	cout << "isClosed:" << isClosed << endl;
 
 	if(isClosed){
+		cout << "1" << endl;
 		it->second->handleCloseCallback();
+		cout << "2" << endl;
 		delEpollReadFd(_epollfd, peerfd);
+		cout << "3" << endl;
 		_connMap.erase(it);
 	}else{
 		it->second->handleMessageCallback();
