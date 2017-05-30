@@ -17,7 +17,7 @@ using std::map;
 using std::cout;
 using std::endl;
 
-
+//修改此处打开   运行离线main
 #if 0
 
 int main(void){
@@ -37,7 +37,7 @@ int main(void){
 	wd::DictProducer::getInstance() -> build_dict();
 	wd::DictProducer::getInstance() -> store_dict("./data/mydict.dat");
 	wd::DictProducer::getInstance() -> create_index();
-	wd::DictProducer::getInstance() -> getMyresultQueue("hel");
+//	wd::DictProducer::getInstance() -> getMyresultQueue("hel");
 	
 	return 0;
 }

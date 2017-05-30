@@ -30,6 +30,9 @@ void timeTask(){
 
 }//end of namespace wd
 
+
+//修改此处  打开 运行在线main
+#if 1
 int main(int argc, const char *argv[])
 {
 	//timer 和  server颠倒顺序后不能成长运行
@@ -46,4 +49,4 @@ int main(int argc, const char *argv[])
 	return 0;
 }
 
-
+#endif
