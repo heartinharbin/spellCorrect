@@ -5,6 +5,8 @@ using std::cout;
 using std::endl;
 using std::string;
 
+//namespace wd{
+
 size_t nBytesCode(const char ch)
 {
 	if(ch & (1 << 7))
@@ -83,6 +85,8 @@ int distance(const std::string & lhs, const std::string &rhs)
 	}
 	return editDist[lhs_len][rhs_len];
 }
+
+//}//end of namespace wd
 
 #if 0
 int main(void)
